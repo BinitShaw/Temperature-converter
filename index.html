@@ -1,0 +1,167 @@
+!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Conversion</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #fff;
+            transition: background 0.5s;
+        }
+
+        .container {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 300px;
+        }
+
+        .input-group {
+            margin: 15px 0;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 20px;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .result {
+            margin-top: 20px;
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        .result p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><marquee>Temperature Conversion</marquee></h1>
+        <h2>made by binit shaw😉 </h2>
+        <div class="input-group">
+            <label for="tempValue">Enter the temperature value:</label>
+            <input type="number" id="tempValue" name="tempValue" step="0.01">
+        </div>
+        <div class="input-group">
+            <label for="unit">Select the unit of measurement:</label>
+            <select id="unit" name="unit">
+                <option value="C">Celsius (C)</option>
+                <option value="F">Fahrenheit (F)</option>
+                <option value="K">Kelvin (K)</option>
+            </select>
+        </div>
+        <button onclick="convertTemperature()">Convert</button>
+        <div class="result">
+            <h2>Converted Temperatures:</h2>
+            <p id="resultCelsius">Celsius: </p>
+            <p id="resultFahrenheit">Fahrenheit: </p>
+            <p id="resultKelvin">Kelvin: </p>
+        </div>
+    </div>
+    <script>
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        function setRandomColors() {
+            const color1 = getRandomColor();
+            const color2 = getRandomColor();
+            document.body.style.background = `linear-gradient(to right, ${color1}, ${color2})`;
+
+            const button = document.querySelector('button');
+            button.style.backgroundColor = getRandomColor();
+        }
+
+        function celsiusToFahrenheit(celsius) {
+            return (celsius * 9 / 5) + 32;
+        }
+
+        function celsiusToKelvin(celsius) {
+            return celsius + 273.15;
+        }
+
+        function fahrenheitToCelsius(fahrenheit) {
+            return (fahrenheit - 32) * 5 / 9;
+        }
+
+        function fahrenheitToKelvin(fahrenheit) {
+            return (fahrenheit - 32) * 5 / 9 + 273.15;
+        }
+
+        function kelvinToCelsius(kelvin) {
+            return kelvin - 273.15;
+        }
+
+        function kelvinToFahrenheit(kelvin) {
+            return (kelvin - 273.15) * 9 / 5 + 32;
+        }
+
+        function convertTemperature() {
+            const tempValue = parseFloat(document.getElementById("tempValue").value);
+            const unit = document.getElementById("unit").value;
+
+            let celsius, fahrenheit, kelvin;
+
+            if (isNaN(tempValue)) {
+                alert("Please enter a valid number for temperature.");
+                return;
+            }
+
+            if (unit === "C") {
+                celsius = tempValue;
+                fahrenheit = celsiusToFahrenheit(tempValue);
+                kelvin = celsiusToKelvin(tempValue);
+            } else if (unit === "F") {
+                celsius = fahrenheitToCelsius(tempValue);
+                fahrenheit = tempValue;
+                kelvin = fahrenheitToKelvin(tempValue);
+            } else if (unit === "K") {
+                celsius = kelvinToCelsius(tempValue);
+                fahrenheit = kelvinToFahrenheit(tempValue);
+                kelvin = tempValue;
+            }
+
+            document.getElementById("resultCelsius").innerText = `Celsius: ${celsius.toFixed(2)} °C`;
+            document.getElementById("resultFahrenheit").innerText = `Fahrenheit: ${fahrenheit.toFixed(2)} °F`;
+            document.getElementById("resultKelvin").innerText = `Kelvin: ${kelvin.toFixed(2)} K`;
+        }
+
+        window.onload = setRandomColors;
+    </script>
+</body>
+</html>
